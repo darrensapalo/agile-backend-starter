@@ -1,0 +1,11 @@
+type Mutation {
+  service_check_qr (
+    code: String!
+  ): SampleOutput
+}
+
+type SampleOutput {
+  is_valid : Boolean!
+  message : String
+}
+
