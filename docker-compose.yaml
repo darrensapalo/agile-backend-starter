@@ -1,0 +1,50 @@
+version: '3.6'
+services:
+  rapidpass-handler:
+    container_name: agile-backend-starter-handler
+    image: github.com/darrensapalo/agile-backend-starter
+    restart: always
+    networks:
+      - default
+    ports: 
+      - "1103:8080"
+    environment:
+      - PORT=8080
+  postgres:
+    image: postgres:12-alpine
+    restart: always
+    volumes:
+    - db_data:/var/lib/postgresql/data
+    networks:
+      - default
+    environment:
+      POSTGRES_DB: agilebackendstarter
+      POSTGRES_PASSWORD: LHobvJziEvaNtmHS752xURZYZHjXWOoFaGQ21D5T
+  graphql-engine:
+    container_name: agile-backend-starter-hasura
+    image: hasura/graphql-engine:v2.0.10
+    ports:
+    - "1104:8080"
+    depends_on:
+    - "postgres"
+    restart: always
+    volumes:
+    - ./hasura/metadata/:/hasura-metadata
+    - ./hasura/migrations/:/hasura-migrations
+    networks:
+      - default
+    environment:
+      HASURA_GRAPHQL_DATABASE_URL: postgres://postgres:LHobvJziEvaNtmHS752xURZYZHjXWOoFaGQ21D5T@postgres:5432/agilebackendstarter
+      ## enable the console served by server
+      HASURA_GRAPHQL_ENABLE_CONSOLE: "true" # set to "false" to disable console
+      HASURA_GRAPHQL_NO_OF_RETRIES: 3
+      ## enable debugging mode. It is talino-account-service_defaultrecommended to disable this in production
+      HASURA_GRAPHQL_DEV_MODE: "true"
+      HASURA_GRAPHQL_ENABLED_LOG_TYPES: startup, http-log, webhook-log, websocket-log, query-log
+      ## uncomment next line to set an admin secret
+      HASURA_GRAPHQL_ADMIN_SECRET: admin
+      # HASURA_GRAPHQL_JWT_SECRET: '{"type":"RS256", "claims_namespace": "hasura", "jwk_url": "http://keycloak:8080/auth/realms/agilebackendstarter/protocol/openid-connect/certs",  "audience": "account", "issuer": "http://keycloak:8080/auth/realms/agilebackendstarter"}'
+      HASURA_GRAPHQL_UNAUTHORIZED_ROLE: anonymous
+
+volumes:
+  db_data:

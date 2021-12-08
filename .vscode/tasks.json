@@ -1,0 +1,47 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "shell",
+			"problemMatcher": [],
+			"command": "make",
+			"args": ["package-image"],
+			"options": {
+				"cwd": "./rapidpass-handler"
+			},
+			"label": "make: package-image - rapidpass-handler",
+			"detail": "Builds the latest rapidpass-handler docker image"
+		},
+		{
+			"type": "shell",
+			"problemMatcher": [],
+			"command": "docker-compose",
+			"args": [
+				"up",
+				"-d",
+				"--force-recreate",
+				"rapidpass-handler"
+			],
+			"label": "docker: recreate handler - rapidpass-handler",
+			"detail": "Recreates the rapidpass-handler",
+			"dependsOn": [
+				"make: package-image - rapidpass-handler"
+			]
+		},
+		{
+			"type": "shell",
+			"problemMatcher": [],
+			"command": "docker-compose",
+			"args": [
+				"logs",
+				"-f",
+				"rapidpass-handler"
+			],
+			"label": "docker: view logs - rapidpass-handler",
+			"detail": "Views the logs of the rapidpass-handler",
+			"dependsOn": [
+				"docker: recreate handler - rapidpass-handler"
+			]
+		}
+	]
+}

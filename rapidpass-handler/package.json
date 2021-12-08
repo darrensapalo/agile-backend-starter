@@ -1,0 +1,50 @@
+{
+  "name": "rapidpass-handler",
+  "version": "1.0.0",
+  "description": "A typescript handler for the agilebackendstarter repository",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest",
+    "build": "tsc",
+    "dev": "nodemon",
+    "package-image": "make package-image"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/darrensapalo/agile-backend-starter.git"
+  },
+  "keywords": [
+    "agile",
+    "backend",
+    "hasura"
+  ],
+  "author": "Darren Sapalo",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/darrensapalo/agile-backend-starter/issues"
+  },
+  "homepage": "https://github.com/darrensapalo/agile-backend-starter#readme",
+  "dependencies": {
+    "axios": "^0.24.0",
+    "express": "^4.17.1",
+    "node-fetch": "^3.1.0",
+    "ts-node": "^10.4.0",
+    "typescript": "^4.5.2"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.13",
+    "nodemon": "^2.0.15"
+  },
+  "nodemonConfig": {
+    "ignore": [
+      "test/*",
+      "docs/*"
+    ],
+    "watch": [
+      "src"
+    ],
+    "ext": "js,ts",
+    "exec": "ts-node ./src/index.ts",
+    "delay": 3
+  }
+}

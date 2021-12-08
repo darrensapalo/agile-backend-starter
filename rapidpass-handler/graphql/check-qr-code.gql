@@ -1,0 +1,6 @@
+mutation CheckQRCode {
+  service_check_qr(code: "OKqwer") {
+    is_valid
+    message
+  }
+}
